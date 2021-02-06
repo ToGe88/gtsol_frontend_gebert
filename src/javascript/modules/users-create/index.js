@@ -26,7 +26,6 @@ class UsersCreate {
    * User Creation Form Init
    */
   initForm() {
-    console.log('---- Initing Form ----');
     /**
      * Add Submit Listener.
      */
@@ -48,8 +47,6 @@ class UsersCreate {
    * @param {*} response 
    */
   triggerUserCreateSuccess(response) {
-    console.log('Trigger Create Success', response);
-
     dispatchCustomEvent('user-creation-success', {});
   }
 

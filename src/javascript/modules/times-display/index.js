@@ -41,7 +41,6 @@ class TimesDisplay {
    */
   initEvents() {
     window.addEventListener('user-selected', (ev) => {
-      console.log('USER Selected', ev);
       this.selectItem(ev.detail.id);
     });
 
@@ -87,7 +86,6 @@ class TimesDisplay {
     createEntryButton.value = 'Create New Time Entry';
     createEntryButton.innerText = 'Create New Time Entry';
     createEntryButton.addEventListener('click', () => {
-      console.log('Create Button Clicked');
       dispatchCustomEvent('times-create-new', {
         id: data.id,
       });
@@ -115,7 +113,6 @@ class TimesDisplay {
          * Prepare the Diagram.
          */
         result.data.forEach((entry) => {
-          console.log(entry);
           timesItem.insertAdjacentHTML('beforeend', this.renderTimesEntry(entry));
           
           const date1 = new Date(entry.start);
@@ -128,7 +125,6 @@ class TimesDisplay {
         });
         for (let i = 0; i < result.data.length; i += 1) {
           data.datasets[0].backgroundColor.push(`hsl(240, 100%, ${100 / result.data.length * i}%)`);
-          console.log(i, data.datasets[0].backgroundColor);
         }
         const canvas = document.createElement('canvas');
         this.diagram.appendChild(canvas);

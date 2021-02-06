@@ -18,6 +18,24 @@
     max-height: 400px;
   }
 
+  form {
+    select[name="findBy"] {
+      margin-right: 5px;
+
+      @include breakpoint-max(600px) {
+        margin-right: 0;
+      }
+    }
+
+    input[name="searchKey"] {
+      margin-left: 5px;
+
+      @include breakpoint-max(600px) {
+        margin-left: 0;
+      }
+    }
+  }
+
   &__content {
     width: 100%;
     display: flex;

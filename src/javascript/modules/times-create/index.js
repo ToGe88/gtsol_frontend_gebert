@@ -37,7 +37,6 @@ class TimesCreate {
     this.form.addEventListener('submit', (ev) => {
       ev.preventDefault();
       let formData = new FormData(this.form);
-      console.log(formData.get('uid'));
 
       fetch(`${CONFIG.baseUrl}/users/${formData.get('uid')}/times`, {
         method: 'POST',
@@ -63,8 +62,6 @@ class TimesCreate {
    * @param {*} response 
    */
   triggerTimesCreateSuccess(response) {
-    console.log('Trigger Create Success', response);
-
     dispatchCustomEvent('times-creation-success', {});
   }
 
