@@ -1,12 +1,16 @@
-import { create } from 'lodash';
+/**
+ * Config Import.
+ */
 import { CONFIG } from '../../config';
 
+/**
+ * Helpers Import.
+ */
 import TemplateHandler from '../../helpers/templateHandler';
 import addClass from '../../helpers/addClass';
 import removeClass from '../../helpers/removeClass';
 import dispatchCustomEvent from '../../helpers/dispatchCustomEvent';
 import replacePlaceholder from '../../helpers/replacePlaceholder';
-// import Chart from 'chart.js';
 
 class TimesDisplay {
   constructor(options = {}) {
@@ -15,17 +19,26 @@ class TimesDisplay {
     this.diagram = this.element.querySelector('.times-display__diagram');
   }
 
+  /**
+   * Init Function.
+   */
   init() {
     console.log('---- Times Display Init ----');
     this.clearContent();
     this.initEvents();
   }
 
+  /**
+   * Clear Content Function.
+   */
   clearContent() {
     this.diagram.innerHTML = '';
     this.content.innerHTML = '';
   }
 
+  /**
+   * Init Event Listeners.
+   */
   initEvents() {
     window.addEventListener('user-selected', (ev) => {
       console.log('USER Selected', ev);
@@ -35,20 +48,30 @@ class TimesDisplay {
     window.addEventListener('times-creation-success', () => this.clearContent());
   }
 
+  /**
+   * Select Item via Fetch, based on given ID.
+   * @param {String} id 
+   */
   selectItem(id) {
     fetch(`${CONFIG.baseUrl}users/${id}`)
     .then((res) => res.json())
-    .then((result) => {
-      console.log(result);
-      // this.data = result.data;
-      // this.renderData(this.data);
-      this.showData(result.data);
-    })
+    .then((result) => this.showData(result.data))
     .catch((error) => console.error(error));
   }
 
+  /**
+   * Show Data Function and Create Markup
+   * @param {*} data - Data to render.
+   */
   showData(data) {
+    /**
+     * Initially Clear Content.
+     */
     this.clearContent();
+
+    /**
+     * New Item with Markup.
+     */
     const timesItem = document.createElement('section');
     const description = document.createElement('div');
     addClass(description, 'times-display__item__description');
@@ -73,6 +96,9 @@ class TimesDisplay {
     cta.appendChild(createEntryButton);
     timesItem.appendChild(cta);
 
+    /**
+     * Fetch for Times Entries for ID.
+     */
     fetch(`${CONFIG.baseUrl}users/${data.id}/times`)
     .then((res) => res.json())
     .then((result) => {
@@ -85,6 +111,9 @@ class TimesDisplay {
           labels: [],
         };
 
+        /**
+         * Prepare the Diagram.
+         */
         result.data.forEach((entry) => {
           console.log(entry);
           timesItem.insertAdjacentHTML('beforeend', this.renderTimesEntry(entry));
@@ -97,11 +126,9 @@ class TimesDisplay {
           data.datasets[0].data.push(diffDays);
           data.labels.push(`${diffDays.toString()} Day/s`);
         });
-        console.log(data);
         for (let i = 0; i < result.data.length; i += 1) {
           data.datasets[0].backgroundColor.push(`hsl(240, 100%, ${100 / result.data.length * i}%)`);
           console.log(i, data.datasets[0].backgroundColor);
-
         }
         const canvas = document.createElement('canvas');
         this.diagram.appendChild(canvas);
@@ -114,16 +141,22 @@ class TimesDisplay {
           }
         });
       } else {
+        /**
+         * If there are no time Entries show Warning and hide Diagram.
+         */
         addClass(this.diagram, 'hidden');
         timesItem.insertAdjacentHTML('beforeend', '<h3>Man, this guy is lazy!</h3>');
       }
     })
     .catch((error) => console.error(error));
-    console.log(timesItem);
 
     this.content.appendChild(timesItem);
   }
 
+  /**
+   * Render the Times Entry and return Template with replaced Placeholders.
+   * @param {*} entry 
+   */
   renderTimesEntry(entry) {
     this.template = TemplateHandler.getTemplate('times-display-item');
     this.template = replacePlaceholder(this.template, 'ID', entry.id);

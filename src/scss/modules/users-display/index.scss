@@ -6,8 +6,16 @@
   overflow-y: auto;
 
   @include breakpoint-max(900px) {
-    grid-column: 1 / span 4;
-    grid-row: 5 / span 2;
+    grid-column-start: unset;
+    grid-column-end: unset;
+    grid-row-start: unset;
+    grid-row-end: unset;
+    margin-bottom: 20px;
+    max-height: 600px;
+  }
+
+  @include breakpoint-max(600px) {
+    max-height: 400px;
   }
 
   &__content {
@@ -25,25 +33,46 @@
     box-shadow: none;
     border: 1px solid $grey-light;
 
+    @include breakpoint-max(600px) {
+      flex-wrap: wrap;
+    }
+
     &__content {
       min-width: 66.6666%;
       padding-right: 20px;
+
+      @include breakpoint-max(600px) {
+        min-width: 100%;
+        padding-right: 0;
+      }
 
       h2 {
         font-size: 40px;
         margin-top: 8px;
         margin-bottom: 8px;
+
+        @include breakpoint-max(600px) {
+          font-size: 24px;
+        }
       }
 
       p {
         font-size: 20px;
         font-family: 'IBM Plex Sans', sans-serif;
         color: $grey-disabled;
+
+        @include breakpoint-max(600px) {
+          font-size: 16px;
+        }
       }
 
       p.times-entries {
         color: $black;
         margin-top: 16px;
+
+        @include breakpoint-max(600px) {
+          font-size: 12px;
+        }
 
         span {
           color: blue;
@@ -53,6 +82,13 @@
 
     &__cta {
       min-width: 33.3333%;
+
+      @include breakpoint-max(600px) {
+        min-width: 100%;
+        padding-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+      }
     }
   }
 

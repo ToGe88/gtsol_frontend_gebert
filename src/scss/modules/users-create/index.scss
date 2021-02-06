@@ -4,13 +4,19 @@
   grid-row: 1 / span 1;
 
   @include breakpoint-max(900px) {
-    grid-column: 1 / span 4;
-    grid-row: 1 / span 1;
+    grid-column: unset;
+    grid-row: unset;
+    margin-bottom: 20px;
   }
 
   form {
     input {
       margin: 0 5px 10px;
+
+      @include breakpoint-max(600px) {
+        margin: 0 0 10px;
+        width: 100%;
+      }
 
       &:first-of-type {
         margin-left: 0;

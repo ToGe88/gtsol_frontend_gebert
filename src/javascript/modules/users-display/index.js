@@ -1,5 +1,11 @@
+/**
+ * Config Import
+ */
 import { CONFIG } from '../../config';
 
+/**
+ * Helper Imports
+ */
 import TemplateHandler from '../../helpers/templateHandler';
 import replacePlaceholder from '../../helpers/replacePlaceholder';
 import addClass from '../../helpers/addClass';
@@ -14,53 +20,89 @@ class UsersDisplay {
     this.reset = this.element.querySelector('.users-display__reset');
   }
 
+  /**
+   * Init Function for Events and initial Data Fetch.
+   */
   init() {
     console.log('---- Users Display Init ----');
-
     this.initEvents();
     this.fetchData();
   }
 
+  /**
+   * Adding Event Listeners for unique behaviour.
+   */
   initEvents() {
     window.addEventListener('user-creation-success', () => this.fetchData());
     window.addEventListener('times-creation-success', () => this.fetchData());
 
+    /**
+     * Listen to Sort Change.
+     */
     this.sort.addEventListener('change', (ev) => {
       ev.preventDefault();
-      console.log('Sort Changed');
       this.sortData(ev.target.value);
     });
 
+    /**
+     * Listen to Form Submit
+     */
     this.searchForm.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      console.log('Search Submitted');
       const searchFormData = new FormData(this.searchForm);
       this.searchData(searchFormData);
     });
 
+    /**
+     * Listen to Reset Click and do initial Fetch again.
+     */
     this.reset.addEventListener('click', () => {
       this.fetchData();
     })
   }
 
+  /**
+   * Fetch Initial Data from /users.
+   */
   fetchData() {
     fetch(`${CONFIG.baseUrl}users`)
     .then((res) => res.json())
     .then((result) => {
+      /**
+       * Set initial Data.
+       */
       this.initialData = result.data;
+
+      /**
+       * Render Data
+       */
       this.renderData(this.initialData);
     })
     .catch((error) => this.renderError(error));
   }
 
+  /**
+   * Render the Data based on given Array.
+   * @param {Array} data - Data-Array to Render.
+   */
   renderData(data) {
-    console.log('RENDER DATA: ', data);
     if (data.length > 0) {
+      /**
+       * Clear the content.
+       */
       this.clearContent();
+
+      /**
+       * Instance-Data to initial Data.
+       */
       this.data = this.initialData;
       data.forEach((item) => {
         const itemElement = document.createElement('section');
         addClass(itemElement, 'users-display__item');
+
+        /**
+         * Get Template and replace Placeholders with fetched data.
+         */
         this.template = TemplateHandler.getTemplate('users-display-item');
         this.template = replacePlaceholder(this.template, 'FirstName', item.first_name);
         this.template = replacePlaceholder(this.template, 'LastName', item.last_name);
@@ -69,8 +111,9 @@ class UsersDisplay {
   
         itemElement.insertAdjacentHTML('beforeend', this.template);
         
-        console.log('TIMES ENTRY CHECK: ', this.checkForTimesEntry(item.id));
-
+        /**
+         * Check for Times Entries.
+         */
         fetch(`${CONFIG.baseUrl}users/${item.id}/times`)
         .then((res) => res.json())
         .then((result) => {
@@ -84,14 +127,14 @@ class UsersDisplay {
             }
           }
           itemElement.querySelector('p.times-entries').innerHTML = countTemplate;
-          console.log('TIMES ENTRY RESULT', result);
         })
         .catch((error) => console.error(error));
 
-
+        /**
+         * Add Listeners to Buttons.
+         */
         const showEntryButton = itemElement.querySelector('.users-display__item__show-entry');
         showEntryButton.addEventListener('click', () => {
-          console.log('Show Entry Click');
           dispatchCustomEvent('user-selected', {
             id: item.id,
           });
@@ -99,65 +142,75 @@ class UsersDisplay {
 
         const createEntryButton = itemElement.querySelector('.users-display__item__create-entry');
         createEntryButton.addEventListener('click', () => {
-          console.log('Create Entry Click');
           dispatchCustomEvent('times-create-new', {
             id: item.id,
           });
         });
+
+        /**
+         * Append final Element to Content.
+         */
         this.content.appendChild(itemElement);
       });
     } else {
       this.clearContent();
       this.data = this.initialData;
-      this.content.insertAdjacentHTML('beforeend', 'No data to show');
+      this.content.insertAdjacentHTML('beforeend', '<h3>No data to show</h3>');
     }
   }
 
+  /**
+   * Error Function
+   * @param {*} error 
+   */
   renderError(error) {
-    console.log('RENDER ERROR: ', error);
+    console.error('RENDER ERROR: ', error);
   }
 
+  /**
+   * Inital Clearing of Content
+   */
   clearContent() {
     this.content.innerHTML = '';
   }
 
+  /**
+   * Sort Data by given Value.
+   * @param {String} value - Value to sort by.
+   */
   sortData(value) {
     this.sortBy = value || '';
     if (this.data.length > 0) {
-      console.log(event.target.value);
       this.data = this.data.sort((a, b) => {
-      //   console.log(a[event.target.value] - b[event.target.value], a[event.target.value], b[event.target.value]);
-      //   a[event.target.value] - b[event.target.value]
         return a[this.sortBy].localeCompare(b[this.sortBy])
       });
 
+      /**
+       * Render the sorted Data.
+       */
       this.renderData(this.data);
     }
   }
 
+  /**
+   * Search for given Values by findBy and searchKey.
+   * @param {FormData} formData - Initial Form Data.
+   */
   searchData(formData) {
-    // this.fetchData();
-    console.log('Searching Data: ');
     if (this.initialData.length > 0) {
-      console.log(formData.get('findBy'), formData.get('searchKey'));
       this.data = this.initialData.filter((a) => {
-        // console.log(a[data.get('findBy')].search(data.get('searchKey')));
         return a[formData.get('findBy')].search(formData.get('searchKey')) > -1 ? a : false;
       });
 
+      /**
+       * Check for SortBy and render afterwards.
+       */
       if (this.sortBy) {
         this.sortData(this.sortBy)
       } else {
         this.renderData(this.data);
       }
     }
-  }
-
-  checkForTimesEntry(id) {
-    let timesEntry = ''
-    
-
-    return timesEntry;
   }
 }
 

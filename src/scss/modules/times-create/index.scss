@@ -5,11 +5,16 @@
   @include breakpoint-max(900px) {
     grid-column-end: unset;
     grid-row-end: unset;
+    margin-bottom: 20px;
   }
 
   form {
     input {
       margin: 0 5px 10px;
+
+      @include breakpoint-max(600px) {
+        margin: 0 0 10px;
+      }
 
       &:first-of-type {
         margin-left: 0;

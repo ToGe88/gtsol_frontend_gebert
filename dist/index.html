@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Getting Started</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- Man i love IBM PLEX -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;400;500&display=swap" rel="stylesheet">
@@ -14,95 +15,91 @@
       <h1>Wow, who made this nice frontend? <b>Tobias Gebert did!</b></h1>
     </header>
     <main>
-      <!-- This is my main. -->
-        <!-- This is the article. -->
-        <section class="users-create" data-module="UsersCreate">
-          <h2>Users Create Section</h2>
-          <form>
-            <fieldset>
-              <input type="email" placeholder="E-Mail please!" name="email" required/>
-              <input type="text" placeholder="Your First Name now!" name="first_name" required />
-              <input type="text" placeholder="Your Last Name too!" name="last_name" required />
-            </fieldset>
-            <button type="submit" value="Create a new User">User Create Go!</button>
-          </form>
+      <section class="users-create" data-module="UsersCreate">
+        <h2>Users Create Section</h2>
+        <form>
+          <fieldset>
+            <input type="email" placeholder="E-Mail please!" name="email" required/>
+            <input type="text" placeholder="Your First Name now!" name="first_name" required />
+            <input type="text" placeholder="Your Last Name too!" name="last_name" required />
+          </fieldset>
+          <button type="submit" value="Create a new User">User Create Go!</button>
+        </form>
 
-        </section>
-        <section class="users-display" data-module="UsersDisplay">
-          <h2>Users Display Section</h2>
-          <div class="users-display__filters">
-            <form id="search-form">
-              <fieldset>
-                <label for="findBy">
-                  <select id="findBy" name="findBy" required class="secondary">
-                    <option value="">--- Choose findBy Field --- </option>
-                    <option value="email">Mail</option>
-                    <option value="first_name">First Name</option>
-                    <option value="last_name">Last Name</option>
-                  </select>
-                </label>
-                <label for="findBy">
-                  <input type="text" placeholder="Key to Search for" id="searchKey" name="searchKey" required />
-                </label>
-              </fieldset>
-              <button type="submit">Search</button>
-            </form>
-            <form id="sort-form">
-              <fieldset>
-                <label for="sort">
-                  <select id="sort" name="sort">
-                    <option value="">--- Choose sortable Field --- </option>
-                    <option value="email">Mail</option>
-                    <option value="first_name">First Name</option>
-                    <option value="last_name">Last Name</option>
-                  </select>
-                </label>
-              </fieldset>
-            </form>
-            
-            <button class="users-display__reset secondary">Reset Filter</button>
+      </section>
+      <section class="users-display" data-module="UsersDisplay">
+        <h2>Users Display Section</h2>
+        <div class="users-display__filters">
+          <form id="search-form">
+            <fieldset>
+              <label for="findBy">
+                <select id="findBy" name="findBy" required class="secondary">
+                  <option value="">--- Choose findBy Field --- </option>
+                  <option value="email">Mail</option>
+                  <option value="first_name">First Name</option>
+                  <option value="last_name">Last Name</option>
+                </select>
+              </label>
+              <label for="findBy">
+                <input type="text" placeholder="Key to Search for" id="searchKey" name="searchKey" required />
+              </label>
+            </fieldset>
+            <button type="submit">Search</button>
+          </form>
+          <form id="sort-form">
+            <fieldset>
+              <label for="sort">
+                <select id="sort" name="sort">
+                  <option value="">--- Choose sortable Field --- </option>
+                  <option value="email">Mail</option>
+                  <option value="first_name">First Name</option>
+                  <option value="last_name">Last Name</option>
+                </select>
+              </label>
+            </fieldset>
+          </form>
+          
+          <button class="users-display__reset secondary">Reset Filter</button>
+        </div>
+        <div class="users-display__content"></div>
+        <script type="text/template" data-template-name="users-display-item">
+          <div class="users-display__item__content">
+            <small>~ID~</small>
+            <h2>~FirstName~ ~LastName~</h2>
+            <p>~Mail~</p>
+            <p class="times-entries"></p>
           </div>
-          <div class="users-display__content"></div>
-          <script type="text/template" data-template-name="users-display-item">
-            <div class="users-display__item__content">
-              <small>~ID~</small>
-              <h2>~FirstName~ ~LastName~</h2>
-              <p>~Mail~</p>
-              <p class="times-entries"></p>
-            </div>
-            <div class="users-display__item__cta">
-              <button class="users-display__item__show-entry secondary">Show Entry</button>
-              <button class="users-display__item__create-entry">Create New Entry</button>
-            </div>
-          </script>
-        </section>
-        <section class="times-display" data-module="TimesDisplay">
-          <h2>Times Display Section</h2>
-          <div class="times-display__diagram"><canvas></canvas></div>
-          <div class="times-display__content"></div>
-          <script type="text/template" data-template-name="times-display-item">
-            <div class="times-display__item__content">
-              <small>~ID~</small>
-              <p class="times-duration">From ~Start~ to ~End~</p>
-            </div>
-          </script>
-        </section>
+          <div class="users-display__item__cta">
+            <button class="users-display__item__show-entry secondary">Show Entry</button>
+            <button class="users-display__item__create-entry">Create New Entry</button>
+          </div>
+        </script>
+      </section>
 
-        <section class="times-create" data-module="TimesCreate">
-          <h2>Times Create Section</h2>
-          <form id="times-create-form">
-            <fieldset>
-              <input type="text" placeholder="This is your id" name="uid" readonly required/>
-              <input type="date" placeholder="When the **** did you start?" name="start" required />
-              <input type="date" placeholder="And when did it end?" name="end" required />
-            </fieldset>
-            <button type="submit" value="Create a new Times Entry">Times Create Go!</button>
-          </form>
-        </section>
+      <section class="times-create" data-module="TimesCreate">
+        <h2>Times Create Section</h2>
+        <form id="times-create-form">
+          <fieldset>
+            <input type="text" placeholder="This is your id" name="uid" readonly required/>
+            <input type="date" placeholder="When the **** did you start?" name="start" required />
+            <input type="date" placeholder="And when did it end?" name="end" required />
+          </fieldset>
+          <button type="submit" value="Create a new Times Entry">Times Create Go!</button>
+        </form>
+      </section>
+
+      <section class="times-display" data-module="TimesDisplay">
+        <h2>Times Display Section</h2>
+        <div class="times-display__diagram"><canvas></canvas></div>
+        <div class="times-display__content"></div>
+        <script type="text/template" data-template-name="times-display-item">
+          <div class="times-display__item__content">
+            <small>~ID~</small>
+            <p class="times-duration">From ~Start~ to ~End~</p>
+          </div>
+        </script>
+      </section>
     </main>
-    <footer>
-      This is my footer.
-    </footer>
     <script src="main.js"></script>
   </body>
 </html>

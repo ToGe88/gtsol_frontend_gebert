@@ -1,3 +1,11 @@
+/**
+ * Config Import.
+ */
+import { CONFIG } from '../../config';
+
+/**
+ * Helpers Import
+ */
 import dispatchCustomEvent from '../../helpers/dispatchCustomEvent';
 
 class TimesCreate {
@@ -6,27 +14,33 @@ class TimesCreate {
     this.form = this.element.querySelector('form#times-create-form');
   }
 
+  /**
+   * Init Function
+   */
   init() {
     console.log('---- Times Create Init ----');
 
     this.initEvents();
   }
 
+  /**
+   * Init Event Listeners
+   */
   initEvents() {
     window.addEventListener('times-create-new', (ev) => {
       this.fillForm(ev.detail.id);
     });
 
+    /**
+     * Listen to Form Submit
+     */
     this.form.addEventListener('submit', (ev) => {
       ev.preventDefault();
       let formData = new FormData(this.form);
       console.log(formData.get('uid'));
 
-      fetch(`https://morning-harbor-70967.herokuapp.com/users/${formData.get('uid')}/times`, {
+      fetch(`${CONFIG.baseUrl}/users/${formData.get('uid')}/times`, {
         method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/x-www-form-urlencoded'
-        // },
         body: formData,
       })
       .then((res) => res.json())
@@ -35,16 +49,29 @@ class TimesCreate {
     });
   }
 
+  /**
+   * Fill Form with given ID.
+   * @param {String} id 
+   */
   fillForm(id) {
     this.form.querySelector('[name="uid"]').value = id;
+    this.form.querySelector('[name="uid"]').focus();
   }
 
+  /**
+   * Trigger Success Event.
+   * @param {*} response 
+   */
   triggerTimesCreateSuccess(response) {
     console.log('Trigger Create Success', response);
 
     dispatchCustomEvent('times-creation-success', {});
   }
 
+  /**
+   * Trigger Error Event.
+   * @param {*} error 
+   */
   triggerTimesCreateError(error) {
     console.error(error);
     
