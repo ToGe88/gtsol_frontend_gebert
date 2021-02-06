@@ -1,0 +1,63 @@
+.users-display {
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 2;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+
+  @include breakpoint-max(900px) {
+    grid-column: 1 / span 4;
+    grid-row: 5 / span 2;
+  }
+
+  &__content {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  &__item {
+    display: flex;
+    width: 100%;
+    justify-items: stretch;
+    margin-bottom: 10px;
+    box-shadow: none;
+    border: 1px solid $grey-light;
+
+    &__content {
+      min-width: 66.6666%;
+      padding-right: 20px;
+
+      h2 {
+        font-size: 40px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+
+      p {
+        font-size: 20px;
+        font-family: 'IBM Plex Sans', sans-serif;
+        color: $grey-disabled;
+      }
+
+      p.times-entries {
+        color: $black;
+        margin-top: 16px;
+
+        span {
+          color: blue;
+        }
+      }
+    }
+
+    &__cta {
+      min-width: 33.3333%;
+    }
+  }
+
+  &__filters {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

@@ -1,0 +1,76 @@
+.times-display {
+  display: block;  
+  grid-column: 3 / span 2;
+  grid-row: 2 / span 2;
+  overflow-y: auto;
+
+  @include breakpoint-max(900px) {
+    grid-column: 1 / span 4;
+    grid-row: 6 / span 2;
+  }
+
+  &__content {
+    section {
+      border-top: 1px solid $grey-light;
+      padding: 0;
+      border-radius: 0;
+      padding-top: 20px;
+      box-shadow: none;
+
+      h2 {
+        font-size: 40px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+
+      h3 {
+        margin-top: 20px;
+        border: 1px solid red;
+        color: red;
+        border-radius: 4px;
+        text-align: center;
+        font-family: 'IBM Plex Sans', sans-serif;
+        background: rgba(255, 0, 0, 0.2);
+        padding: 10px;
+        font-size: 40px;
+        display: block;
+      }
+  
+      p {
+        font-size: 20px;
+        font-family: 'IBM Plex Sans', sans-serif;
+        color: $grey-disabled;
+      }
+    }
+  }
+
+  &__item__cta {
+    padding-top: 20px;
+  }
+
+  &__item__content {
+    padding: 15px 0 10px;
+    border-bottom: 1px solid $grey-light;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    p.times-duration {
+      color: $black;
+      margin-top: 16px;
+
+      span {
+        color: blue;
+      }
+    }
+  }
+
+  &__diagram {
+    padding-bottom: 40px;
+
+    &.hidden {
+      display: none;
+    }
+  }
+}

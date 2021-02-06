@@ -1,0 +1,141 @@
+@mixin breakpoint-max($val) {
+  @media only screen and (max-width: $val) {
+    @content;
+  }
+}
+
+@import 'reset-css';
+@import 'variables';
+@import 'modules';
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background: $body-color;
+  padding: 8vh 20px 0;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+header {
+  font-size: 30px;
+  font-family: 'IBM Plex', sans-serif;
+  font-weight: 200;
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 15px 20px;
+  background: blue;
+  color: white;
+  text-align: center;
+  z-index: 9999;
+
+  b {
+    font-weight: 400;
+    text-decoration: underline;
+  }
+}
+
+main {
+  display: grid;
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 28vh 28vh 28vh;
+
+  @include breakpoint-max(900px) {
+    display: flex;
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(auto-fill, 250px);
+  }
+}
+
+
+section {
+  box-shadow: $default-shadow;
+  background: white;
+  position: relative;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+fieldset {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+input[type="submit"],
+button {
+  font-family: 'IBM Plex Mono', monospace;
+  background: blue;
+  color: white;
+  appearance: none;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  font-weight: 300;
+  display: block;
+  margin-bottom: 10px;
+  justify-self: stretch;
+  width: 100%;
+}
+
+button.secondary {
+  background: $grey-light;
+  color: $black;
+}
+
+label {
+  width: 100%;
+}
+
+input,
+select {
+  font-family: 'IBM Plex Mono', monospace;
+  appearance: none;
+  border: none;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 300;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  color: $black;
+  border: 1px solid $black;
+}
+
+input:read-only {
+  color: $grey-disabled;
+}
+
+input::placeholder {
+  color: $black;
+}
+
+h2 {
+  font-size: 24px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+small {
+  background: $grey-lightest;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: $black;
+  font-size: 12px;
+  line-height: 1.3;
+  font-family: 'IBM Plex Mono', monospace;
+}
