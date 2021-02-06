@@ -37,14 +37,6 @@ class UsersDisplay {
     window.addEventListener('times-creation-success', () => this.fetchData());
 
     /**
-     * Listen to Sort Change.
-     */
-    this.sort.addEventListener('change', (ev) => {
-      ev.preventDefault();
-      this.sortData(ev.target.value);
-    });
-
-    /**
      * Listen to Form Submit
      */
     this.searchForm.addEventListener('submit', (ev) => {
@@ -178,17 +170,18 @@ class UsersDisplay {
    * Sort Data by given Value.
    * @param {String} value - Value to sort by.
    */
-  sortData(value) {
+  sortData(value, data = this.initialData) {
     this.sortBy = value || '';
-    if (this.data.length > 0) {
-      this.data = this.data.sort((a, b) => {
+    if (data.length > 0) {
+      console.log(data);
+      data = data.sort((a, b) => {
         return a[this.sortBy].localeCompare(b[this.sortBy])
       });
 
       /**
        * Render the sorted Data.
        */
-      this.renderData(this.data);
+      this.renderData(data);
     }
   }
 
@@ -198,17 +191,24 @@ class UsersDisplay {
    */
   searchData(formData) {
     if (this.initialData.length > 0) {
-      this.data = this.initialData.filter((a) => {
+      this.filteredData = this.initialData.filter((a) => {
         return a[formData.get('findBy')].search(formData.get('searchKey')) > -1 ? a : false;
       });
 
+      console.log(this.filteredData, 'After Filter');
       /**
        * Check for SortBy and render afterwards.
        */
-      if (this.sortBy) {
-        this.sortData(this.sortBy)
-      } else {
-        this.renderData(this.data);
+      if (formData.get('sort').length > 0) {
+        this.sortBy = formData.get('sort');
+        this.finalData = this.filteredData.sort((a, b) => {
+          return a[this.sortBy].localeCompare(b[this.sortBy])
+        });
+
+        /**
+         * Render the sorted Data.
+         */
+        this.renderData(this.finalData);
       }
     }
   }

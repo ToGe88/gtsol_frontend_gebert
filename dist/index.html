@@ -33,23 +33,24 @@
           <form id="search-form">
             <fieldset>
               <select id="findBy" name="findBy" required class="secondary">
-                <option value="">--- Choose findBy Field --- </option>
+                <option value="">--- Find by --- </option>
                 <option value="email">Mail</option>
                 <option value="first_name">First Name</option>
                 <option value="last_name">Last Name</option>
               </select>
-              <input type="text" placeholder="Key to Search for" id="searchKey" name="searchKey" required />
+              <input type="text" placeholder="Search Term" id="searchKey" name="searchKey" required />
+              <select id="sort" name="sort">
+                <option value="">--- Sort by --- </option>
+                <option value="email">Mail</option>
+                <option value="first_name">First Name</option>
+                <option value="last_name">Last Name</option>
+              </select>
             </fieldset>
             <button type="submit">Search</button>
           </form>
           <form id="sort-form">
             <fieldset>
-              <select id="sort" name="sort">
-                <option value="">--- Choose sortable Field --- </option>
-                <option value="email">Mail</option>
-                <option value="first_name">First Name</option>
-                <option value="last_name">Last Name</option>
-              </select>
+              
             </fieldset>
           </form>
           
