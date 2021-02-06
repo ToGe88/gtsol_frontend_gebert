@@ -1,4 +1,9 @@
 /**
+ * Node Imports
+ */
+import arrayFrom from 'array-from';
+
+/**
  * Config Import
  */
 import { CONFIG } from '../../config';
@@ -49,8 +54,18 @@ class UsersDisplay {
      * Listen to Reset Click and do initial Fetch again.
      */
     this.reset.addEventListener('click', () => {
+      this.resetForm();
       this.fetchData();
     })
+  }
+
+  resetForm() {
+    arrayFrom(this.searchForm.querySelectorAll('select')).forEach((item) => {
+      item.value = '';
+    });
+    arrayFrom(this.searchForm.querySelectorAll('input')).forEach((item) => {
+      item.value = '';
+    });
   }
 
   /**
@@ -173,7 +188,6 @@ class UsersDisplay {
   sortData(value, data = this.initialData) {
     this.sortBy = value || '';
     if (data.length > 0) {
-      console.log(data);
       data = data.sort((a, b) => {
         return a[this.sortBy].localeCompare(b[this.sortBy])
       });
@@ -195,7 +209,6 @@ class UsersDisplay {
         return a[formData.get('findBy')].search(formData.get('searchKey')) > -1 ? a : false;
       });
 
-      console.log(this.filteredData, 'After Filter');
       /**
        * Check for SortBy and render afterwards.
        */
