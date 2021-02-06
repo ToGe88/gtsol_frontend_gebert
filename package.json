@@ -1,15 +1,14 @@
 {
-  "name": "webpack-demo",
+  "name": "gtsol_frontend_gebert",
   "version": "1.0.0",
-  "description": "",
+  "description": "Frontend for GTSol Test Task",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open",
     "build": "webpack"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tobias Gebert - Senior Frontend Dev.",
   "license": "ISC",
   "devDependencies": {
     "sass": "^1.32.6",
